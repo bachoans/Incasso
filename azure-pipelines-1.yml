@@ -1,0 +1,47 @@
+# CI/CD Pipeline for .NET 8 API Deployment to Azure
+
+trigger:
+- master
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+# Install .NET 8 SDK
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.x'
+    installationPath: $(Agent.ToolsDirectory)/dotnet
+
+# Restore dependencies
+- script: dotnet restore
+  displayName: 'Restore Dependencies'
+
+# Build the solution
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build Solution'
+
+# Publish with Production environment
+- script: dotnet publish -c $(buildConfiguration) -o $(Build.ArtifactStagingDirectory)
+  displayName: 'Publish Artifacts'
+  env:
+    ASPNETCORE_ENVIRONMENT: 'Production'
+
+# Store build artifacts
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: $(Build.ArtifactStagingDirectory)
+    artifactName: 'drop'
+
+# Deploy to Azure Web App
+- task: AzureWebApp@1
+  inputs:
+    azureSubscription: 'Theoma (093fd9f9-d07e-4d47-8960-f9505d3fdb7a)' # Use your service connection name
+    appName: 'VMEIncassoApi'
+    package: '$(Build.ArtifactStagingDirectory)'
+    appType: 'webApp'
+    runtimeStack: 'DOTNETCORE|8.0'

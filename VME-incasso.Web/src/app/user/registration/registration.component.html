@@ -1,0 +1,238 @@
+<div class="login-container">
+  <div class="login-header">
+    <h1>Registreer en maak je account aan</h1>
+  </div>
+  <div class="p-4">
+    <p class="registration-description">
+      Dank om gebruik te maken van onze applicatie. Eest willen we je beter leren kennen. Als je de eerste gebruiker bent binnen je kantoor, dan word je door ons als administrator aanzien. Dat betekent dat jij ook diegene bent die voortaan je collega's toegang kan geven tot deze applicatie.
+    </p>
+  </div>
+  <div class="p-4">
+    <form #registrationForm="ngForm" (ngSubmit)="onSubmit(registrationForm)">
+      <div class="form-row">
+        <!-- Company Name -->
+        <div class="form-group">
+          <label for="companyName" class="form-label">Naam kantoor</label>
+          <input
+            type="text"
+            id="companyName"
+            name="companyName"
+            class="form-control"
+            [(ngModel)]="registrationModel.companyName"
+            #companyName="ngModel"
+            required
+          />
+          <div *ngIf="companyName.invalid && companyName.touched" class="invalid-feedback">
+            De kantoornaam is een verplicht veld.
+          </div>
+        </div>
+
+        <!-- Company Email -->
+        <div class="form-group">
+          <label for="companyEmail" class="form-label">E-mail adres</label>
+          <input
+            type="email"
+            id="companyEmail"
+            name="companyEmail"
+            class="form-control"
+            [(ngModel)]="registrationModel.companyEmail"
+            #companyEmail="ngModel"
+            required
+          />
+          <div *ngIf="companyEmail.invalid && companyEmail.touched" class="invalid-feedback">
+            Wil een geldig e-mail adres invoeren.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Address -->
+        <div class="form-group">
+          <label for="address" class="form-label">Adres</label>
+          <input
+            type="text"
+            id="address"
+            name="address"
+            class="form-control"
+            [(ngModel)]="registrationModel.address"
+            #address="ngModel"
+            required
+          />
+          <div *ngIf="address.invalid && address.touched" class="invalid-feedback">
+            Het adres is een verplicht veld.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <!-- Country -->
+        <div class="form-group">
+          <label for="country" class="form-label">Land</label>
+          <input
+            type="text"
+            id="country"
+            name="country"
+            class="form-control"
+            [(ngModel)]="registrationModel.country"
+            #country="ngModel"
+            required
+          />
+          <div *ngIf="country.invalid && country.touched" class="invalid-feedback">
+            Het land is een verplicht veld.
+          </div>
+        </div>
+        <!-- City -->
+        <div class="form-group">
+          <label for="city" class="form-label">Gemeente</label>
+          <input
+            type="text"
+            id="city"
+            name="city"
+            class="form-control"
+            [(ngModel)]="registrationModel.city"
+            #city="ngModel"
+            required
+          />
+          <div *ngIf="city.invalid && city.touched" class="invalid-feedback">
+            De gemeente is een verplicht veld.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <!-- Postal Code -->
+        <div class="form-group">
+          <label for="postalCode" class="form-label">Postcode</label>
+          <input
+            type="text"
+            id="postalCode"
+            name="postalCode"
+            class="form-control"
+            [(ngModel)]="registrationModel.postalCode"
+            #postalCode="ngModel"
+            required
+            pattern="^[0-9]{4,6}$"
+          />
+          <div *ngIf="postalCode.invalid && postalCode.touched" class="invalid-feedback">
+            Wil een geldige postcode invullen (4 cijfers).
+          </div>
+        </div>
+        
+        <!-- Phone -->
+        <div class="form-group">
+          <label for="phone" class="form-label">Telefoonnummer</label>
+          <input
+            type="text"
+            id="phone"
+            name="phone"
+            class="form-control"
+            [(ngModel)]="registrationModel.phone"
+            #phone="ngModel"
+            required
+            pattern="^[0-9\-\+\s\(\)]{7,15}$"
+          />
+          <div *ngIf="phone.invalid && phone.touched" class="invalid-feedback">
+            Wil een geldig telefoonnummer invoeren.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+       
+
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">E-mail</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            class="form-control"
+            [(ngModel)]="registrationModel.email"
+            #email="ngModel"
+            required
+          />
+          <div *ngIf="email.invalid && email.touched" class="invalid-feedback">
+            Wil een geldig e-mail adres invullen.
+          </div>
+        </div>
+
+        <!-- Administrator Name -->
+        <div class="form-group">
+          <label for="name" class="form-label">Naam administrator</label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            class="form-control"
+            [(ngModel)]="registrationModel.name"
+            #name="ngModel"
+            required
+          />
+          <div *ngIf="name.invalid && name.touched" class="invalid-feedback">
+            De naam is een verplicht veld.
+          </div>
+        </div>
+      </div>
+
+      <div class="form-row">
+
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password" class="form-label">Paswoord</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            class="form-control"
+            [(ngModel)]="registrationModel.password"
+            #password="ngModel"
+            required
+          />
+          <div *ngIf="password.invalid && password.touched" class="invalid-feedback">
+            Paswoord is verplicht.
+          </div>
+        </div>
+        
+        <!-- Confirm Password -->
+        <div class="form-group">
+          <label for="confirmPassword" class="form-label">Bevestig het paswoord</label>
+          <input
+            type="password"
+            id="confirmPassword"
+            name="confirmPassword"
+            class="form-control"
+            [(ngModel)]="registrationModel.confirmPassword"
+            #confirmPassword="ngModel"
+            required
+          />
+          <div *ngIf="confirmPassword.invalid && confirmPassword.touched" class="invalid-feedback">
+            Het is verplicht het paswoord te bevestigen.
+          </div>
+          <div
+            *ngIf="
+              registrationModel.password !== registrationModel.confirmPassword &&
+              confirmPassword.touched
+            "
+            class="invalid-feedback"
+          >
+            De ingevulde paswoorden komen niet overeen.
+          </div>
+        </div>
+      </div>
+
+        
+
+      <button type="submit" class="btn btn-brand w-100" [disabled]="registrationForm.invalid">
+        Registreer
+      </button>
+    </form>
+  </div>
+  <div class="login-footer">
+    <p>
+      Heb je reeds een account?
+      <a routerLink="/login">Inloggen</a>
+    </p>
+  </div>
+</div>

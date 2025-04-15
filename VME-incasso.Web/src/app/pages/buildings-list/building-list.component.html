@@ -1,0 +1,108 @@
+<div class="container mt-4">
+  <h2 class="mb-3">Gebouwen / mede-eigendommen</h2>
+
+  <!-- Form Section -->
+  <form [formGroup]="buildingForm" (ngSubmit)="submitForm()" class="card p-4 shadow-sm">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="name" class="form-label">Naam mede-eigendom</label>
+        <input type="text" id="name" class="form-control" formControlName="name" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="address" class="form-label">Adres</label>
+        <input type="text" id="address" class="form-control" formControlName="address" required />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="city" class="form-label">Gemeente</label>
+        <select id="city" class="form-select" formControlName="city" required>
+          <option value="" disabled>Gemeente</option>
+          <option value="New York">New York</option>
+          <option value="Los Angeles">Los Angeles</option>
+        </select>
+      </div>     
+
+    <div class="col-md-6 mb-3">
+      <label for="courtJurisdiction" class="form-label">Bevoegde rechtbank</label>
+      <input type="text" id="courtJurisdiction" class="form-control" formControlName="courtJurisdiction" required />
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="interestRate" class="form-label">Intrestvoet</label>
+        <input type="number" id="interestRate" class="form-control" formControlName="interestRate" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="penaltyRate" class="form-label">Schadebeding</label>
+        <input type="number" id="penaltyRate" class="form-control" formControlName="penaltyRate" required />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="postalCode" class="form-label">Postcode</label>
+        <input type="text" id="postalCode" class="form-control" formControlName="postalCode" required />
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="bankAccount" class="form-label">Nummer bankrekening</label>
+        <input type="text" id="bankAccount" class="form-control" formControlName="bankAccount" required />
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-between">
+      <button type="submit" class="btn btn-primary" [disabled]="buildingForm.invalid || loading">
+        {{ isEditing ? 'Update' : 'Create' }} Building
+      </button>
+      <button type="button" class="btn btn-secondary" (click)="resetForm()">Cancel</button>
+    </div>
+  </form>
+
+  <!-- Loading Spinner -->
+  <div *ngIf="loading" class="text-center mt-3">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <!-- Table List Section -->
+  <div class="table-responsive mt-4">
+    <table class="table table-bordered table-hover">
+      <thead class="table-dark">
+        <tr>
+          <th>Name</th>
+          <th>Address</th>
+          <th>City</th>
+          <th>Postal Code</th>
+          <th>Bank Account</th>
+          <th>Court Jurisdiction</th>
+          <th>Interest Rate</th>
+          <th>Penalty Rate</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let building of buildings">
+          <td>{{ building.name }}</td>
+          <td>{{ building.address }}</td>
+          <td>{{ building.city }}</td>
+          <td>{{ building.postalCode }}</td>
+          <td>{{ building.bankAccount }}</td>
+          <td>{{ building.courtJurisdiction }}</td>
+          <td>{{ building.interestRate }}</td>
+          <td>{{ building.penaltyRate }}</td>
+          <td>
+            <button class="border-0 me-2" title="Edit building" (click)="editBuilding(building)">
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/>
+                <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5z"/>
+              </svg>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

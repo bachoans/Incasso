@@ -1,0 +1,82 @@
+<div class="container mt-5">
+    <h2>Een openstaande schuld toevoegen</h2>
+    <form #debtForm="ngForm" (ngSubmit)="onSubmit(debtForm)">
+      <div class="mb-3">
+        <label for="debtorId" class="form-label">Debtor ID</label>
+        <input
+          type="text"
+          id="debtorId"
+          class="form-control"
+          name="debtorId"
+          [(ngModel)]="debtModel.debtorId"
+          #debtorId="ngModel"
+          required
+        />
+        <div *ngIf="debtorId.invalid && debtorId.touched" class="text-danger">
+          Debtor ID is een verplicht veld.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="amount" class="form-label">bedrag</label>
+        <input
+          type="number"
+          id="amount"
+          class="form-control"
+          name="amount"
+          [(ngModel)]="debtModel.amount"
+          #amount="ngModel"
+          required
+          min="0.01"
+        />
+        <div *ngIf="amount.invalid && amount.touched" class="text-danger">
+          Bedrag moet hoger zijn dan 0? Negatieve bedragen moeten als een betaling ingevoerd worden.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="dueDate" class="form-label">Vervaldatum</label>
+        <input
+          type="date"
+          id="dueDate"
+          class="form-control"
+          name="dueDate"
+          [(ngModel)]="debtModel.dueDate"
+          #dueDate="ngModel"
+          required
+        />
+        <div *ngIf="dueDate.invalid && dueDate.touched" class="text-danger">
+          Vervaldatum is een verplicht veld.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="interestStartDate" class="form-label">Aanvangsdatum intresten</label>
+        <input
+          type="date"
+          id="interestStartDate"
+          class="form-control"
+          name="interestStartDate"
+          [(ngModel)]="debtModel.interestStartDate"
+          #interestStartDate="ngModel"
+          required
+        />
+        <div *ngIf="interestStartDate.invalid && interestStartDate.touched" class="text-danger">
+          Aanvangsdatum intresten is een verplicht veld.
+        </div>
+      </div>
+  
+      <div class="mb-3">
+        <label for="description" class="form-label">Omschrijving</label>
+        <textarea
+          id="description"
+          class="form-control"
+          name="description"
+          [(ngModel)]="debtModel.description"
+        ></textarea>
+      </div>
+  
+      <button type="submit" class="btn btn-primary" [disabled]="debtForm.invalid">schuldvordering toevoegen</button>
+    </form>
+  </div>
+  

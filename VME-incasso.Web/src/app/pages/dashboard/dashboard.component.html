@@ -1,0 +1,127 @@
+<div class="container mt-4">
+  <h4>Beste {{ user.firstName }}</h4>
+  
+  <p>Hieronder kan je terecht op je lopende incassodossiers te raadplegen, dan wel om een nieuw incassodossier op te starten. Klik op één van onderstaande knoppen.</p>
+    <!-- <span *ngIf="isAdmin">
+      Under <strong>“your account”</strong> you can also add claim handlers from your organization.
+    </span> -->
+
+  <div class="row g-3">
+    <!-- Your Files Card -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header fw-bold">Je incassodossiers</div>
+        <div class="card-body">
+          <ul class="list-group">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              File 001 <span class="badge bg-success">Active</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              File 002 <span class="badge bg-success">Active</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              File 003 <span class="badge bg-success">Active</span>
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              File 004 <span class="badge bg-secondary">Closed</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your Account Card -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header fw-bold">Je account</div>
+        <div class="card-body">
+          <a href="#" class="fw-bold">Gebruikers toevoegen of verwijderen</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Your Buildings Card -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header fw-bold">Je gebouwen</div>
+        <div class="card-body">
+          <ul class="list-group" *ngFor="let building of buildings">
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              {{building.name}} - {{ building.address}}
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Start New Debt Recovery Card -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-header fw-bold">Een nieuw incassodossier opstarten</div>
+        <div class="card-body">
+          <a href="#" class="fw-bold">Een nieuw incassodossier opstarten</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container mt-4">
+    <h2>Welkom, {{ user.firstName }}</h2>
+  
+    <div class="mb-4">
+      <p>Hieronder kan je terecht op je lopende incassodossiers te raadplegen, dan wel om een nieuw incassodossier op te starten. Klik op één van onderstaande knoppen.</p>
+      <button class="btn btn-primary me-2" (click)="startNewRecovery()">Nieuw incassodossier opstarten</button>
+      <button class="btn btn-secondary" (click)="viewFiles()">Raadpleeg je lopende incassodossiers</button>
+    </div>
+  
+    <h3>Je account</h3>
+    <div class="mb-4">
+      <p>Jij bent de administrator voor <strong>{{ user.companyName }}</strong>.</p>
+      <p>Dit is de informatie die we over je kantoor hebben:</p>
+      <ul>
+        <li>Naam: {{ user.companyName }} <button class="btn btn-link" (click)="editField('companyName')">Wijzigen</button></li>
+        <li>Adres: {{ user.address }} <button class="btn btn-link" (click)="editField('address')">Wijzigen</button></li>
+        <li>Postcode: {{ user.postalCode }} <button class="btn btn-link" (click)="editField('postalCode')">Wijzigen</button></li>
+        <li>Gemeente: {{ user.city }} <button class="btn btn-link" (click)="editField('city')">Wijzigen</button></li>
+        <li>Telefoonnummer: {{ user.phone }} <button class="btn btn-link" (click)="editField('phone')">Wijzigen</button></li>
+        <li>e-mail adres: {{ user.email }} <button class="btn btn-link" (click)="editField('email')">Wijzigen</button></li>
+      </ul>
+    </div>
+  
+    <h3>Je Team</h3>
+    <div class="mb-4">
+      <ul>
+        <li *ngFor="let colleague of user.colleagues">
+          {{ colleague.firstName }} {{ colleague.lastName }} ({{ colleague.status }})
+          <button class="btn btn-danger btn-sm ms-2" (click)="removeColleague(colleague)">Verwijderen</button>
+        </li>
+      </ul>
+  
+      <form (ngSubmit)="addColleague()" #addColleagueForm="ngForm" class="mt-3">
+        <div class="mb-3">
+          <label for="colleagueEmail" class="form-label">Voeg een collega toe</label>
+          <input
+            type="email"
+            id="colleagueEmail"
+            class="form-control"
+            [(ngModel)]="newColleagueEmail"
+            name="colleagueEmail"
+            required
+          />
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="addColleagueForm.invalid">Toevoegen</button>
+      </form>
+    </div>
+  
+    <h3>Je gebouwen</h3>
+    <div>
+      <ul>
+        <li *ngFor="let building of user.buildings">{{ building.name }}</li>
+      </ul>
+      <button class="btn btn-primary mt-3">Nieuw gebouw toevoegen</button>
+    </div>
+  </div>
+  

@@ -1,0 +1,54 @@
+<div class="login-container">
+  <div class="login-header">
+    <h1>Meld je aan</h1>
+  </div>
+  <div class="p-4">
+    <form (ngSubmit)="login()">
+      <div class="mb-3">
+        <label for="username" class="form-label">Je gebruiksnaam</label>
+        <input
+          type="text"
+          [(ngModel)]="username"
+          name="username"
+          class="form-control"
+          id="username"
+          placeholder="Enter your Username"
+          required
+          [disabled]="loading"
+        />
+        <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
+      </div>
+      <div class="mb-3">
+        <label for="password" class="form-label">Je paswoord</label>
+        <input
+          type="password"
+          [(ngModel)]="password"
+          name="password"
+          class="form-control"
+          id="password"
+          placeholder="Enter your password"
+          required
+          [disabled]="loading"
+        />
+        <div *ngIf="error" class="invalid-feedback">{{ error }}</div>
+      </div>
+
+      <!-- Loading Spinner -->
+      <div *ngIf="loading" class="text-center mt-3">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-brand w-100" [disabled]="loading">
+        aanmelden
+      </button>
+    </form>
+  </div>
+  <div class="login-footer">
+    <p>
+      Nog geen geregistreerd gebruiker?
+      <a routerLink="/register">Registreer nu</a>
+    </p>
+  </div>
+</div>

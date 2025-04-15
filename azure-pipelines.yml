@@ -1,0 +1,31 @@
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: '20.x'
+  displayName: 'Install Node.js'
+
+- script: |
+    cd VME-incasso.Web
+    npm install -g @angular/cli
+    npm install
+    ng build --configuration production
+  displayName: 'Install dependencies and build project'
+
+- script: |
+    cd VME-incasso.Web
+    ls -la dist
+    ls -la dist/vme-incasso.web
+  displayName: 'Debug build output'
+
+- task: AzureStaticWebApp@0
+  inputs:
+    app_location: 'VME-incasso.Web/dist/vme-incasso.web/browser'
+    api_location: 'vmeincassoapi-fnajfnfaabdye7ea.germanywestcentral-01.azurewebsites.net'
+    output_location: ''
+    azure_static_web_apps_api_token: $(AZURE_STATIC_WEB_APP_TOKEN)
