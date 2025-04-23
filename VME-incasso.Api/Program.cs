@@ -154,6 +154,7 @@ app.Use(async (context, next) =>
 });
 
 // ✅ Global Exception Handler
+// ✅ Global Exception Handler
 app.UseExceptionHandler(errorApp =>
 {
     errorApp.Run(async context =>
@@ -161,20 +162,36 @@ app.UseExceptionHandler(errorApp =>
         var logger = context.RequestServices.GetRequiredService<ILogger<Program>>();
         var exception = context.Features.Get<IExceptionHandlerFeature>()?.Error;
 
+        // 🔥 Log outer exception
         logger.LogError(exception, "🔥 Unhandled exception");
 
+        // 🔥 Log every inner exception (if any)
+        for (var ex = exception?.InnerException; ex != null; ex = ex.InnerException)
+        {
+            logger.LogError(ex, $"🔥 Inner exception ({ex.GetType().Name})");
+        }
+
+        // 🚀 Build a simple inner-exception chain for the client
+        var innerMessages = new List<string>();
+        for (var ex = exception?.InnerException; ex != null; ex = ex.InnerException)
+        {
+            innerMessages.Add(ex.Message);
+        }
+
+        context.Response.StatusCode = StatusCodes.Status500InternalServerError;
         context.Response.ContentType = "application/json";
-        context.Response.StatusCode = 500;
 
         var errorResponse = new
         {
             error = "Internal Server Error",
-            details = exception?.Message
+            message = exception?.Message,
+            innerMessages = innerMessages   // <-- all nested messages here
         };
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
     });
 });
+
 
 // ✅ Auth
 app.UseAuthentication();
