@@ -169,7 +169,7 @@ app.UseExceptionHandler(errorApp =>
         var errorResponse = new
         {
             error = "Internal Server Error",
-            details = app.Environment.IsDevelopment() ? exception?.Message : "An unexpected error occurred"
+            details = exception?.Message
         };
 
         await context.Response.WriteAsync(JsonSerializer.Serialize(errorResponse));
